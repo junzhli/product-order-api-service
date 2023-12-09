@@ -4,6 +4,7 @@ import { User } from './user';
 
 @Table({
     modelName: "Orders",
+    timestamps: false,
 })
 export class Order extends Model<Order> {
     @Column({

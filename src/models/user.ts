@@ -3,6 +3,7 @@ import { Role } from './role';
 
 @Table({
     modelName: "Users",
+    timestamps: false,
 })
 export class User extends Model<User> {
     @Column({
@@ -32,10 +33,6 @@ export class User extends Model<User> {
     salt: string;
 
     @BelongsTo(() => Role, { as: "Role_Id"})
-    @Column({
-        type: DataType.STRING,
-        allowNull: false,
-    })
     role: Role;
 
     @ForeignKey(() => Role)

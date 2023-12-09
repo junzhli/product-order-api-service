@@ -3,6 +3,7 @@ import { User } from './user';
 
 @Table({
     modelName: "Products",
+    timestamps: false,
 })
 export class Product extends Model<Product> {
     @Column({
@@ -22,19 +23,15 @@ export class Product extends Model<Product> {
         type: DataType.FLOAT,
         allowNull: false,
     })
-    price: string;
+    price: number;
 
     @Column({
         type: DataType.BIGINT,
         allowNull: false,
     })
-    stock: string;
+    stock: number;
 
     @BelongsTo(() => User, { as: "User_Id"})
-    @Column({
-        type: DataType.STRING,
-        allowNull: false,
-    })
     user: User;
 
     @ForeignKey(() => User)

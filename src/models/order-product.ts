@@ -2,6 +2,7 @@ import { Table, Column, Model, DataType } from 'sequelize-typescript';
 
 @Table({
     modelName: "OrderProducts",
+    timestamps: false,
 })
 export class OrderProduct extends Model<OrderProduct> {
     @Column({
@@ -21,13 +22,13 @@ export class OrderProduct extends Model<OrderProduct> {
         type: DataType.FLOAT,
         allowNull: false,
     })
-    price: string;
+    price: number;
 
     @Column({
         type: DataType.BIGINT,
         allowNull: false,
     })
-    count: string;
+    count: number;
 
     @Column({
         type: DataType.INTEGER,
