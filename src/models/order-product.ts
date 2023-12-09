@@ -1,6 +1,8 @@
 import { Table, Column, Model, DataType } from 'sequelize-typescript';
 
-@Table
+@Table({
+    modelName: "OrderProducts",
+})
 export class OrderProduct extends Model<OrderProduct> {
     @Column({
         type: DataType.INTEGER,

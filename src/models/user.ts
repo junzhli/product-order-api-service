@@ -1,7 +1,9 @@
-import { Table, Column, Model, DataType, BelongsTo } from 'sequelize-typescript';
+import { Table, Column, Model, DataType, BelongsTo, ForeignKey } from 'sequelize-typescript';
 import { Role } from './role';
 
-@Table
+@Table({
+    modelName: "Users",
+})
 export class User extends Model<User> {
     @Column({
         type: DataType.INTEGER,
@@ -29,13 +31,14 @@ export class User extends Model<User> {
     })
     salt: string;
 
-    @BelongsTo(() => Role, 'roleId')
+    @BelongsTo(() => Role, { as: "Role_Id"})
     @Column({
         type: DataType.STRING,
         allowNull: false,
     })
-    role: string;
+    role: Role;
 
+    @ForeignKey(() => Role)
     @Column({
         type: DataType.INTEGER,
         allowNull: false,
