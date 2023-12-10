@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { ArrayNotEmpty, IsNotEmpty, IsNumber, Min } from "class-validator";
+import { ArrayNotEmpty, IsNumber, Min } from "class-validator";
 
 export class OrderProductItemsDto {
     @ApiProperty()
@@ -11,10 +11,6 @@ export class OrderProductItemsDto {
 }
 
 export class OrderCreationDto {
-    @ApiProperty()
-    @IsNotEmpty()
-    userId: string;
-
     @ApiProperty({ type: [OrderProductItemsDto] })
     @ArrayNotEmpty()
     orderProducts: OrderProductItemsDto[];

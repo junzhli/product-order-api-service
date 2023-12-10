@@ -3,7 +3,7 @@ import { checkPasswordIfMatchWithHashedValue, createEncryptedHash } from "../uti
 import { UserService } from './user.service';
 import { UserQueryDto } from 'src/dto/user.dto';
 import { JwtService } from '@nestjs/jwt';
-import { IAuthJwtTokenContent } from 'src/interfaces/auth.interface';
+import { IAuthJwtTokenContent } from '../interfaces/auth.interface';
 
 @Injectable()
 export class AuthService {

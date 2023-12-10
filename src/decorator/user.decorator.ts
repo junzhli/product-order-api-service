@@ -1,6 +1,7 @@
-import { createParamDecorator } from "@nestjs/common";
-import { IAuthJwtTokenContent } from "src/interfaces/auth.interface";
+import { ExecutionContext, createParamDecorator } from "@nestjs/common";
+import { IAuthJwtTokenContent } from "../interfaces/auth.interface";
 
-export const User = createParamDecorator((data, req) => {
-    return req.user as IAuthJwtTokenContent;
-  });
+export const User = createParamDecorator((data: unknown, ctx: ExecutionContext) => {
+    const request = ctx.switchToHttp().getRequest();
+    return request.user as IAuthJwtTokenContent;
+  },);

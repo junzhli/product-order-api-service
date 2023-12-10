@@ -24,9 +24,7 @@ export class OrderService {
 
     private readonly logger = new Logger(OrderService.name);
 
-  public async createOrder(orderDto: OrderCreationDto): Promise<void> {
-    const {userId} = orderDto;
-
+  public async createOrder(orderDto: OrderCreationDto, user: IAuthJwtTokenContent): Promise<void> {
     const orderProductIds = lodash.uniq(orderDto.orderProducts.map(orderProduct => orderProduct.id));
 
     if (orderProductIds.length !== orderDto.orderProducts.length) {
@@ -71,7 +69,7 @@ export class OrderService {
         };
 
         const {id: orderId} = await this.orderModel.create({
-            userId,
+            userId: user.id,
         }, {
             transaction,
         });
@@ -111,7 +109,8 @@ export class OrderService {
     const resultSet = await this.orderModel.findAll({
         where: {
             userId: userOnly ? user.id : undefined,
-        }
+        },
+        include: [OrderProduct]
     });
 
     return resultSet;
