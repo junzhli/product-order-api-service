@@ -7,6 +7,8 @@ import { Op, Transaction } from 'sequelize';
 import { Sequelize } from "sequelize-typescript";
 import * as lodash from 'lodash';
 import { OrderProduct } from '../models/order-product';
+import { IAuthJwtTokenContent } from '../interfaces/auth.interface';
+import { Role } from '../decorator/role.decorator';
 
 @Injectable()
 export class OrderService {
@@ -28,7 +30,7 @@ export class OrderService {
     const orderProductIds = lodash.uniq(orderDto.orderProducts.map(orderProduct => orderProduct.id));
 
     if (orderProductIds.length !== orderDto.orderProducts.length) {
-        throw new Error("Items in order products contain duplicates")
+        throw new Error("Items in order products contain duplicates");
     }
 
     const transaction = await this.sequelize.transaction({
@@ -47,7 +49,7 @@ export class OrderService {
         });
 
         if (products.length !== orderDto.orderProducts.length) {
-            throw new Error("Some products in order product list don't exist")
+            throw new Error("Some products in order product list don't exist");
         }
 
         const orderProducts: {
@@ -101,5 +103,17 @@ export class OrderService {
         await transaction.rollback();
         throw error;
     }
+  }
+
+  public async listOrder(user: IAuthJwtTokenContent): Promise<Order[]> {
+    const userOnly = user.roleId === Role.Customer;
+
+    const resultSet = await this.orderModel.findAll({
+        where: {
+            userId: userOnly ? user.id : undefined,
+        }
+    });
+
+    return resultSet;
   }
 }
