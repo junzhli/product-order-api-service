@@ -9,6 +9,8 @@ import { Order } from './models/order';
 import { OrderProduct } from './models/order-product';
 import { ProductController } from './controller/product.controller';
 import { ProductService } from './service/product.service';
+import { OrderService } from './service/order.service';
+import { OrderController } from './controller/order.controller';
 
 @Module({
   imports: [
@@ -39,7 +41,7 @@ import { ProductService } from './service/product.service';
       OrderProduct,
     ]),
   ],
-  controllers: [ProductController],
-  providers: [ProductService],
+  controllers: [ProductController, OrderController],
+  providers: [ProductService, OrderService],
 })
 export class AppModule {}
