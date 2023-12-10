@@ -26,12 +26,6 @@ export class User extends Model<User> {
     })
     password: string;
 
-    @Column({
-        type: DataType.STRING,
-        allowNull: false,
-    })
-    salt: string;
-
     @BelongsTo(() => Role, { as: "Role_Id"})
     role: Role;
 

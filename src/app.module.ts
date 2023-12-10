@@ -11,6 +11,10 @@ import { ProductController } from './controller/product.controller';
 import { ProductService } from './service/product.service';
 import { OrderService } from './service/order.service';
 import { OrderController } from './controller/order.controller';
+import { UserAuthController } from './controller/user-auth.controller';
+import { UserService } from './service/user.service';
+import { JwtModule } from '@nestjs/jwt';
+import { AuthService } from './service/auth.service';
 
 @Module({
   imports: [
@@ -40,8 +44,13 @@ import { OrderController } from './controller/order.controller';
       Order,
       OrderProduct,
     ]),
+    JwtModule.register({
+      global: true,
+      secret: process.env.JWT_TOKEN_SECRET_KEY,
+      signOptions: { expiresIn: '3600s' },
+    }),
   ],
-  controllers: [ProductController, OrderController],
-  providers: [ProductService, OrderService],
+  controllers: [ProductController, OrderController, UserAuthController],
+  providers: [ProductService, OrderService, UserService, AuthService],
 })
 export class AppModule {}

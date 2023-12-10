@@ -39,3 +39,11 @@ export class ProductDeletionDto {
     @IsNotEmpty()
     id: string;
 }
+
+// export class ProductQueryDto {
+//     @ApiProperty({required: false})
+//     price?: number;
+//     @ApiProperty({required: false})
+//     stock?: number;
+//     @ApiProperty
+// }
