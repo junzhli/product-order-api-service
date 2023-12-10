@@ -21,6 +21,7 @@ export class AuthService {
     }
     const payload: IAuthJwtTokenContent = {
         id: user.id,
+        roleId: user.roleId.toString(),
     };
     return this.jwtService.signAsync(payload);
   }

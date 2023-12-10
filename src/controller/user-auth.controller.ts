@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Post, Put } from '@nestjs/common';
 import { UserService } from '../service/user.service';
 import { UserCreationDto, UserQueryDto } from '../dto/user.dto';
-import { AuthService } from 'src/service/auth.service';
+import { AuthService } from '../service/auth.service';
 
 @Controller("user")
 export class UserAuthController {

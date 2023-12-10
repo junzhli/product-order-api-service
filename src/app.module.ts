@@ -51,6 +51,11 @@ import { AuthService } from './service/auth.service';
     }),
   ],
   controllers: [ProductController, OrderController, UserAuthController],
-  providers: [ProductService, OrderService, UserService, AuthService],
+  providers: [
+    ProductService, 
+    OrderService, 
+    UserService, 
+    AuthService
+  ],
 })
 export class AppModule {}
