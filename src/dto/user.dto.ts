@@ -6,8 +6,8 @@ export class UserCreationDto {
     @ApiProperty()
     password: string;
     @ApiProperty({
-        description: 'manager: 0, customer: 1',
-        default: "0",
+        description: 'manager: 1, customer: 2',
+        default: "1",
       })
     roleId: string;
 }
