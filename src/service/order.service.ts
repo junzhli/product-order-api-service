@@ -106,10 +106,15 @@ export class OrderService {
   public async listOrder(user: IAuthJwtTokenContent): Promise<Order[]> {
     const userOnly = user.roleId === Role.Customer;
 
+    let where = {};
+    if (userOnly) {
+        Object.assign({
+            userId: user.id,
+        }, where);
+    }
+
     const resultSet = await this.orderModel.findAll({
-        where: {
-            userId: userOnly ? user.id : undefined,
-        },
+        where,
         include: [OrderProduct]
     });
 
