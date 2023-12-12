@@ -15,6 +15,8 @@ import { UserAuthController } from './controller/user-auth.controller';
 import { UserService } from './service/user.service';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthService } from './service/auth.service';
+import { APP_FILTER } from '@nestjs/core';
+import { AllExceptionsFilter } from './filter/all-exceptions.filter';
 
 @Module({
   imports: [
@@ -52,6 +54,10 @@ import { AuthService } from './service/auth.service';
   ],
   controllers: [ProductController, OrderController, UserAuthController],
   providers: [
+    {
+      provide: APP_FILTER,
+      useClass: AllExceptionsFilter,
+    },
     ProductService, 
     OrderService, 
     UserService, 

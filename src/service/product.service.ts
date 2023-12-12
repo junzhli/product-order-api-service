@@ -5,6 +5,8 @@ import { Product } from '../models/product';
 import * as lodash from 'lodash';
 import { IAuthJwtTokenContent } from '../interfaces/auth.interface';
 import { Op } from 'sequelize';
+import { InvalidArgumentException } from '../error/invalid-argument.error';
+import { NotFoundException } from '../error/not-found.error';
 
 @Injectable()
 export class ProductService {
@@ -51,7 +53,7 @@ export class ProductService {
     });
 
     if (affectedItems === 0) {
-        throw new Error("Product id not found");
+        throw new NotFoundException("Product id not found");
     }
   }
 
@@ -63,10 +65,10 @@ export class ProductService {
     const rangeQueryStock = !lodash.isNil(minStock) && !lodash.isNil(maxStock);
 
     if (rangeQueryPrice && minPrice > maxPrice) {
-        throw new Error("minPrice should smaller or equal to maxPrice")
+        throw new InvalidArgumentException("minPrice should smaller or equal to maxPrice")
     }
     if (rangeQueryStock && minStock > maxStock) {
-        throw new Error("minStock should smaller or equal to maxStock")
+        throw new InvalidArgumentException("minStock should smaller or equal to maxStock")
     }
 
     if (rangeQueryPrice) {

@@ -4,6 +4,7 @@ import { UserService } from './user.service';
 import { UserQueryDto } from 'src/dto/user.dto';
 import { JwtService } from '@nestjs/jwt';
 import { IAuthJwtTokenContent } from '../interfaces/auth.interface';
+import { InvalidArgumentException } from '../error/invalid-argument.error';
 
 @Injectable()
 export class AuthService {
@@ -17,7 +18,7 @@ export class AuthService {
     const user = await this.userService.getUser(authDto);
     const matched = await checkPasswordIfMatchWithHashedValue(authDto.password, user.password);
     if (!matched) {
-        throw new Error("password doesn't match")
+        throw new InvalidArgumentException("password doesn't match")
     }
     const payload: IAuthJwtTokenContent = {
         id: user.id,

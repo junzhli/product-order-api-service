@@ -4,6 +4,7 @@ import { UserCreationDto, UserQueryDto } from '../dto/user.dto';
 import { User } from '../models/user';
 import { createEncryptedHash } from "../utils/password.util";
 import * as lodash from 'lodash';
+import { InvalidArgumentException } from '../error/invalid-argument.error';
 
 @Injectable()
 export class UserService {
@@ -29,7 +30,7 @@ export class UserService {
         }
     });
     if (lodash.isNil(user)) {
-        throw new Error("user is not found");
+        throw new InvalidArgumentException("user is not found");
     }
 
     return user;

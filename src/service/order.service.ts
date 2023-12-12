@@ -9,6 +9,7 @@ import * as lodash from 'lodash';
 import { OrderProduct } from '../models/order-product';
 import { IAuthJwtTokenContent } from '../interfaces/auth.interface';
 import { Role } from '../decorator/role.decorator';
+import { InvalidArgumentException } from '../error/invalid-argument.error';
 
 @Injectable()
 export class OrderService {
@@ -28,7 +29,7 @@ export class OrderService {
     const orderProductIds = lodash.uniq(orderDto.orderProducts.map(orderProduct => orderProduct.id));
 
     if (orderProductIds.length !== orderDto.orderProducts.length) {
-        throw new Error("Items in order products contain duplicates");
+        throw new InvalidArgumentException("Items in order products contain duplicates");
     }
 
     const transaction = await this.sequelize.transaction({
@@ -47,7 +48,7 @@ export class OrderService {
         });
 
         if (products.length !== orderDto.orderProducts.length) {
-            throw new Error("Some products in order product list don't exist");
+            throw new InvalidArgumentException("Some products in order product list don't exist");
         }
 
         const orderProducts: {
@@ -59,7 +60,7 @@ export class OrderService {
                 return product.id.toString() === orderProduct.id.toString()
             });
             if (p.stock < orderProduct.count) {
-                throw new Error(`Product is out of stock ${p.id}`);
+                throw new InvalidArgumentException(`Product is out of stock ${p.id}`);
             }
 
             orderProducts.push({
