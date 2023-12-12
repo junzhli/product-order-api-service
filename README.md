@@ -1,17 +1,28 @@
+## Prerequisites
+- Node.js 18.x `node`
+- `yarn`
+- `npx`
+- Postgres
+
+### Running database locally with docker
+To run locally
+```shell
+$ docker-compose -d up
+```
+
 ## Installation
 
 ```bash
 $ yarn install
 ```
 
-## Running the app
+## Set up database
 
-To run locally, we run containers with `docker-compose` to set up prerequisites
-- Postgres
-
-```shell
-docker-compose -d up
+```bash
+$ npx sequelize-cli db:migrate
 ```
+
+## Running the app
 
 ```bash
 # development
