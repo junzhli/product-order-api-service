@@ -1,3 +1,1 @@
-export class InvalidArgumentException extends Error {
-    
-}
+export class InvalidArgumentException extends Error {}

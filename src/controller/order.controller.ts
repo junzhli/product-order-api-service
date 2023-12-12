@@ -8,14 +8,17 @@ import { User } from '../decorator/user.decorator';
 import { IAuthJwtTokenContent } from '../interfaces/auth.interface';
 
 @ApiBearerAuth()
-@Controller("order")
+@Controller('order')
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}
 
   @UseGuards(AuthGuard)
   @Roles(Role.Customer)
   @Post()
-  async createOrder(@Body() orderDto: OrderCreationDto, @User() user: IAuthJwtTokenContent) {
+  async createOrder(
+    @Body() orderDto: OrderCreationDto,
+    @User() user: IAuthJwtTokenContent,
+  ) {
     return this.orderService.createOrder(orderDto, user);
   }
 

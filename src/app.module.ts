@@ -20,9 +20,7 @@ import { AllExceptionsFilter } from './filter/all-exceptions.filter';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(
-      { isGlobal: true }
-    ),
+    ConfigModule.forRoot({ isGlobal: true }),
     SequelizeModule.forRoot({
       dialect: process.env.DB_DIALECT as Dialect,
       host: process.env.DB_HOST,
@@ -30,22 +28,10 @@ import { AllExceptionsFilter } from './filter/all-exceptions.filter';
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      models: [
-        Role,
-        User,
-        Product,
-        Order,
-        OrderProduct,
-      ],
+      models: [Role, User, Product, Order, OrderProduct],
       synchronize: false,
     }),
-    SequelizeModule.forFeature([
-      Role,
-      User,
-      Product,
-      Order,
-      OrderProduct,
-    ]),
+    SequelizeModule.forFeature([Role, User, Product, Order, OrderProduct]),
     JwtModule.register({
       global: true,
       secret: process.env.JWT_TOKEN_SECRET_KEY,
@@ -58,10 +44,10 @@ import { AllExceptionsFilter } from './filter/all-exceptions.filter';
       provide: APP_FILTER,
       useClass: AllExceptionsFilter,
     },
-    ProductService, 
-    OrderService, 
-    UserService, 
-    AuthService
+    ProductService,
+    OrderService,
+    UserService,
+    AuthService,
   ],
 })
 export class AppModule {}

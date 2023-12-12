@@ -1,6 +1,12 @@
-import { Catch, ExceptionFilter, ArgumentsHost, HttpException, HttpStatus } from "@nestjs/common";
-import { HttpAdapterHost } from "@nestjs/core";
-import { InvalidArgumentException } from "src/error/invalid-argument.error";
+import {
+  Catch,
+  ExceptionFilter,
+  ArgumentsHost,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
+import { HttpAdapterHost } from '@nestjs/core';
+import { InvalidArgumentException } from 'src/error/invalid-argument.error';
 
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
@@ -17,12 +23,18 @@ export class AllExceptionsFilter implements ExceptionFilter {
       exception instanceof HttpException
         ? exception.getStatus()
         : exception instanceof InvalidArgumentException
-        ? HttpStatus.BAD_REQUEST : exception instanceof InvalidArgumentException
-        ? HttpStatus.NOT_FOUND : HttpStatus.INTERNAL_SERVER_ERROR;
+          ? HttpStatus.BAD_REQUEST
+          : exception instanceof InvalidArgumentException
+            ? HttpStatus.NOT_FOUND
+            : HttpStatus.INTERNAL_SERVER_ERROR;
 
     const responseBody = {
       statusCode: httpStatus,
-      reason: (httpStatus === HttpStatus.BAD_REQUEST || httpStatus === HttpStatus.NOT_FOUND) ? (exception as Error).message : undefined,
+      reason:
+        httpStatus === HttpStatus.BAD_REQUEST ||
+        httpStatus === HttpStatus.NOT_FOUND
+          ? (exception as Error).message
+          : undefined,
       timestamp: new Date().toISOString(),
       path: httpAdapter.getRequestUrl(ctx.getRequest()),
     };

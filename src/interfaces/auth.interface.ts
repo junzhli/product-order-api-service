@@ -1,4 +1,4 @@
 export interface IAuthJwtTokenContent {
-    id: string;
-    roleId: string;
+  id: string;
+  roleId: string;
 }
