@@ -1,3 +1,6 @@
+# Product order api service
+With techstack `Nestj.js` as IoC featured web framework and `Postgres` as the underlying data persistence solution
+
 ## Prerequisites
 - Node.js 18.x `node`
 - `yarn`
