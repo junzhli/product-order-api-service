@@ -4,6 +4,7 @@ import {
   ArgumentsHost,
   HttpException,
   HttpStatus,
+  Logger,
 } from '@nestjs/common';
 import { HttpAdapterHost } from '@nestjs/core';
 import { InvalidArgumentException } from 'src/error/invalid-argument.error';
@@ -11,6 +12,8 @@ import { InvalidArgumentException } from 'src/error/invalid-argument.error';
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
   constructor(private readonly httpAdapterHost: HttpAdapterHost) {}
+
+  private readonly logger = new Logger(AllExceptionsFilter.name);
 
   catch(exception: unknown, host: ArgumentsHost): void {
     // In certain situations `httpAdapter` might not be available in the
@@ -27,6 +30,11 @@ export class AllExceptionsFilter implements ExceptionFilter {
           : exception instanceof InvalidArgumentException
             ? HttpStatus.NOT_FOUND
             : HttpStatus.INTERNAL_SERVER_ERROR;
+
+    this.logger.error(exception);
+    if (exception instanceof Error) {
+      this.logger.error(exception.stack!);
+    }
 
     const responseBody = {
       statusCode: httpStatus,
