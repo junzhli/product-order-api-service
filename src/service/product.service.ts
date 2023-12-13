@@ -59,18 +59,22 @@ export class ProductService {
 
     let affectedItems: number;
     try {
-        affectedItems = await this.productModel.destroy({
-            where: {
-              id,
-            },
-        });
+      affectedItems = await this.productModel.destroy({
+        where: {
+          id,
+        },
+      });
     } catch (error) {
-        if (error instanceof DatabaseError && error.message.includes("not-null constraint")) {
-            throw new InvalidArgumentException("Product is not allowed to be removed when there's order associated with it");
-        }
-        throw error;
+      if (
+        error instanceof DatabaseError &&
+        error.message.includes('not-null constraint')
+      ) {
+        throw new InvalidArgumentException(
+          "Product is not allowed to be removed when there's order associated with it",
+        );
+      }
+      throw error;
     }
-    
 
     if (affectedItems === 0) {
       throw new NotFoundException('Product id not found');

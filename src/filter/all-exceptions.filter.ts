@@ -7,7 +7,7 @@ import {
   Logger,
 } from '@nestjs/common';
 import { HttpAdapterHost } from '@nestjs/core';
-import { InvalidArgumentException } from 'src/error/invalid-argument.error';
+import { InvalidArgumentException } from '../error/invalid-argument.error';
 
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
