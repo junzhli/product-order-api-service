@@ -9,7 +9,7 @@ import {
 import { Product } from '../models/product';
 import * as lodash from 'lodash';
 import { IAuthJwtTokenContent } from '../interfaces/auth.interface';
-import { Op } from 'sequelize';
+import { Op, DatabaseError } from 'sequelize';
 import { InvalidArgumentException } from '../error/invalid-argument.error';
 import { NotFoundException } from '../error/not-found.error';
 
@@ -56,11 +56,21 @@ export class ProductService {
 
   public async deleteProduct(productDto: ProductDeletionDto): Promise<void> {
     const { id } = productDto;
-    const affectedItems = await this.productModel.destroy({
-      where: {
-        id,
-      },
-    });
+
+    let affectedItems: number;
+    try {
+        affectedItems = await this.productModel.destroy({
+            where: {
+              id,
+            },
+        });
+    } catch (error) {
+        if (error instanceof DatabaseError && error.message.includes("not-null constraint")) {
+            throw new InvalidArgumentException("Product is not allowed to be removed when there's order associated with it");
+        }
+        throw error;
+    }
+    
 
     if (affectedItems === 0) {
       throw new NotFoundException('Product id not found');
